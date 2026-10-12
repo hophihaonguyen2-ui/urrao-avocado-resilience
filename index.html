@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A demonstration prototype for the Urrao Avocado Resilience Partnership.">
+<title>Urrao Avocado Resilience Partnership</title>
+<style>
+:root{--forest:#214b35;--leaf:#4f7d43;--sage:#e8efdf;--cream:#f7f6f0;--ink:#1f2b24;--muted:#68746b;--line:#dfe5da;--white:#fff;--gold:#d8b84b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit}.top-note{background:#183b2a;color:#f7fbf5;text-align:center;padding:9px 16px;font-size:12px;letter-spacing:.03em}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.nav{max-width:1180px;margin:auto;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:750;line-height:1.15}.logo{width:42px;height:42px;border-radius:14px;background:var(--sage);display:grid;place-items:center;font-size:24px}
+.brand small{display:block;color:var(--muted);font-weight:500;font-size:11px;margin-top:4px}
+nav{display:flex;align-items:center;gap:5px;flex-wrap:wrap}nav button{border:0;background:transparent;color:#48554b;padding:10px 12px;border-radius:10px;font:inherit;font-size:13px;cursor:pointer}nav button:hover,nav button.active{background:var(--sage);color:var(--forest)}
+.lang-toggle{margin-left:8px!important;border:1px solid var(--line)!important;background:#fff!important;color:var(--forest)!important;font-weight:800!important;min-width:44px;letter-spacing:.04em}.lang-toggle:hover{background:var(--sage)!important}.lang-toggle:focus-visible{outline:3px solid #c9ddbd;outline-offset:2px}
+main{max-width:1180px;margin:auto;padding:30px 24px 64px}.view{display:none}.view.active{display:block}
+.hero{display:grid;grid-template-columns:1.03fr .97fr;min-height:350px;background:#e7ecdf;border-radius:24px;overflow:hidden}
+.hero-copy{padding:clamp(28px,5vw,58px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.eyebrow{color:var(--leaf);font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+h1{font-size:clamp(32px,4.4vw,52px);line-height:1.06;letter-spacing:-.04em;margin:14px 0 18px;max-width:520px}
+h2{font-size:clamp(24px,3vw,34px);letter-spacing:-.03em;line-height:1.15;margin:8px 0 12px}
+h3{margin:0 0 8px;font-size:17px;letter-spacing:-.02em}
+p{margin:0 0 14px}.lead{font-size:17px;color:#4d5e51;max-width:510px}
+.hero-art{min-height:300px;background:linear-gradient(90deg,rgba(21,53,33,.05),rgba(21,53,33,.04)),url('hero-avocado-resilience.png') center 24%/cover no-repeat}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:11px;padding:12px 17px;background:var(--forest);color:white;text-decoration:none;font:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:transform .15s,background .15s}
+.btn:hover{background:#163b28;transform:translateY(-1px)}.btn.secondary{background:white;color:var(--forest);border:1px solid var(--line)}.btn.light{background:#dce8d0;color:var(--forest)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:34px 0 16px}.section-head p{color:var(--muted);max-width:590px;margin:0}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 4px 18px rgba(35,55,38,.025)}
+.card .icon{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:var(--sage);font-size:21px;margin-bottom:15px}.card p{font-size:13px;color:var(--muted);margin-bottom:15px}.text-link{color:var(--forest);font-size:13px;font-weight:750;text-decoration:none;cursor:pointer}
+.notice{border:1px solid #e9dca7;background:#fff9e5;color:#665522;border-radius:12px;padding:12px 15px;font-size:12px;margin-top:18px}
+.page-intro{padding:24px 0 22px}.page-intro p{color:var(--muted);max-width:700px}
+.layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(260px,.7fr);gap:18px;align-items:start}
+.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:16px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.pill{font-size:11px;font-weight:750;letter-spacing:.02em;padding:6px 9px;border-radius:99px;background:var(--sage);color:var(--forest);white-space:nowrap}.pill.gold{background:#fff2c4;color:#765d13}
+label{display:block;font-size:13px;font-weight:700;margin:0 0 6px}input,select,textarea{width:100%;padding:12px 13px;border:1px solid #d7ded3;border-radius:10px;background:#fff;font:inherit;font-size:14px;color:var(--ink);outline:none}input:focus,select:focus,textarea:focus{border-color:var(--leaf);box-shadow:0 0 0 3px #e6efdf}textarea{resize:vertical;min-height:100px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{margin-bottom:16px}.full{grid-column:1/-1}
+.help{font-size:12px;color:var(--muted);margin-top:6px}.success{display:none;border:1px solid #c8ddc0;background:#f0f7eb;color:#244b30;padding:15px;border-radius:12px;margin-top:16px}.success.show{display:block}
+.steps{display:flex;flex-direction:column;gap:0}.step{display:grid;grid-template-columns:34px 1fr;gap:12px;position:relative;padding-bottom:22px}.step:not(:last-child):before{content:"";position:absolute;left:16px;top:34px;bottom:0;width:2px;background:#dce5d6}.step-num{z-index:1;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--sage);color:var(--forest);font-weight:800;font-size:13px}.step.done .step-num{background:var(--forest);color:white}.step p{font-size:13px;color:var(--muted);margin:4px 0 0}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}.stat{padding:17px;background:#f8faf6;border:1px solid var(--line);border-radius:14px}.stat strong{display:block;font-size:24px;letter-spacing:-.04em;color:var(--forest)}.stat span{font-size:12px;color:var(--muted)}
+.package-row{display:grid;grid-template-columns:1fr auto;gap:12px;padding:14px 0;border-bottom:1px solid #edf0e9}.package-row:last-child{border-bottom:0}.package-row strong{display:block;font-size:13px}.package-row small{color:var(--muted);font-size:12px}.amount{font-size:13px;font-weight:750;white-space:nowrap}
+.total{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:16px;margin-top:10px;font-weight:800}
+.progress-wrap{display:flex;align-items:center;gap:18px}.ring{height:88px;width:88px;border-radius:50%;background:conic-gradient(var(--leaf) 0 60%,#e6eddf 60% 100%);display:grid;place-items:center;flex-shrink:0}.ring:before{content:"60%";width:65px;height:65px;background:white;border-radius:50%;display:grid;place-items:center;font-weight:800;color:var(--forest);font-size:18px}
+.check-list{list-style:none;margin:10px 0 0;padding:0}.check-list li{padding:9px 0;border-bottom:1px solid #edf0e9;font-size:13px;display:flex;gap:10px}.check-list li:last-child{border-bottom:0}.check{color:var(--leaf);font-weight:900}
+.contract{background:#f0f5e9;border-radius:12px;padding:15px;margin-top:14px}.contract ul{padding-left:20px;margin:8px 0 0;font-size:13px}
+footer{border-top:1px solid var(--line);background:white}.footer-inner{max-width:1180px;margin:auto;padding:22px 24px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--muted);font-size:12px}
+
+/* Refined interaction and presentation layer */
+body{background:radial-gradient(circle at 8% 4%,rgba(196,220,179,.28),transparent 26rem),radial-gradient(circle at 92% 18%,rgba(235,204,115,.13),transparent 24rem),var(--cream);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.top-note{background:linear-gradient(90deg,#163b29,#24583c 52%,#163b29);padding:10px 16px;font-weight:750;box-shadow:inset 0 -1px rgba(255,255,255,.08)}
+header{background:rgba(255,255,255,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 8px 30px rgba(27,66,43,.06)}
+.nav{min-height:76px}.brand{transition:transform .2s ease}.brand:hover{transform:translateY(-1px)}
+.logo{width:46px;height:46px;border-radius:15px;background:linear-gradient(145deg,#eff6e9,#d4e5ca);border:1px solid #caddc0;box-shadow:0 8px 20px rgba(33,75,53,.14);transition:transform .25s ease,box-shadow .25s ease}.brand:hover .logo{transform:rotate(-5deg) scale(1.04);box-shadow:0 12px 25px rgba(33,75,53,.2)}
+nav{padding:5px;background:rgba(240,245,236,.82);border:1px solid #dde8d7;border-radius:15px;box-shadow:inset 0 1px rgba(255,255,255,.8)}
+nav button{position:relative;min-height:39px;font-weight:680;transition:background .18s ease,color .18s ease,transform .18s ease,box-shadow .18s ease}
+nav button:hover{background:#fff;color:var(--forest);transform:translateY(-1px);box-shadow:0 4px 12px rgba(38,72,48,.09)}
+nav button.active{background:linear-gradient(135deg,#275b3e,#1d4932);color:#fff;box-shadow:0 6px 16px rgba(29,73,50,.22)}
+.lang-toggle{background:#fff!important;border-color:#cbdcc4!important;box-shadow:0 4px 12px rgba(38,72,48,.1)!important;transition:transform .18s ease,box-shadow .18s ease!important}.lang-toggle:hover{transform:translateY(-1px);box-shadow:0 7px 18px rgba(38,72,48,.16)!important}
+main{padding-top:36px}.view.active{animation:view-enter .38s cubic-bezier(.2,.7,.2,1)}
+@keyframes view-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{position:relative;border:1px solid #d8e4d2;background:linear-gradient(135deg,#edf4e7 0%,#e2ebda 100%);box-shadow:0 22px 55px rgba(39,71,47,.13),0 2px 6px rgba(39,71,47,.05)}
+.hero:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.36),transparent 45%);z-index:1}.hero-copy,.hero-art{position:relative;z-index:2}
+.hero-copy:before{content:"";width:52px;height:4px;border-radius:9px;background:linear-gradient(90deg,var(--leaf),var(--gold));margin-bottom:16px}
+.hero-art{position:relative}.hero-art:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(228,237,219,.38),transparent 25%),linear-gradient(0deg,rgba(23,55,38,.12),transparent 42%);pointer-events:none}
+.eyebrow{color:#3e733f}.lead{line-height:1.7}
+.btn{min-height:46px;padding:12px 19px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(135deg,#2d6344,#1b4730);box-shadow:0 9px 20px rgba(31,75,51,.2),inset 0 1px rgba(255,255,255,.16);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+.btn:hover{background:linear-gradient(135deg,#25583b,#143d28);transform:translateY(-2px);box-shadow:0 13px 26px rgba(31,75,51,.26),inset 0 1px rgba(255,255,255,.16)}.btn:active{transform:translateY(0);box-shadow:0 5px 12px rgba(31,75,51,.18)}
+.btn.secondary{background:rgba(255,255,255,.88);color:var(--forest);border-color:#cad9c4;box-shadow:0 7px 17px rgba(31,75,51,.09)}.btn.secondary:hover{background:#fff;border-color:#aeca9f;box-shadow:0 11px 23px rgba(31,75,51,.14)}
+.btn.light{background:linear-gradient(135deg,#e5efdc,#d3e5c8);color:var(--forest);box-shadow:0 7px 17px rgba(31,75,51,.1)}
+button:focus-visible,a:focus-visible{outline:3px solid rgba(79,125,67,.28);outline-offset:3px}
+.cards{gap:18px}.card{position:relative;overflow:hidden;padding:22px;border-color:#dce6d8;box-shadow:0 10px 28px rgba(35,55,38,.055);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}.card:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--leaf),#8daa74,var(--gold));opacity:.7}.card:hover{transform:translateY(-5px);border-color:#c6d8bf;box-shadow:0 18px 38px rgba(35,55,38,.12)}
+.card .icon{background:linear-gradient(145deg,#eef5e8,#dbe9d2);border:1px solid #d0e0c9;box-shadow:0 7px 16px rgba(42,79,50,.1);transition:transform .22s ease}.card:hover .icon{transform:scale(1.06) rotate(-3deg)}
+.text-link{display:inline-flex;align-items:center;padding:8px 0;border-radius:8px;transition:color .18s ease,transform .18s ease}.text-link:hover{color:var(--leaf);transform:translateX(3px)}
+.notice{border-color:#ead998;background:linear-gradient(135deg,#fffaf0,#fff6d8);box-shadow:inset 4px 0 #d9b94f}
+.panel{border-color:#dce6d8;box-shadow:0 12px 32px rgba(35,55,38,.065);transition:box-shadow .2s ease,border-color .2s ease}.panel:hover{border-color:#ceddc8;box-shadow:0 16px 38px rgba(35,55,38,.09)}
+.pill{border:1px solid #d0dfc9;background:linear-gradient(135deg,#edf5e7,#dfeeda);box-shadow:inset 0 1px rgba(255,255,255,.7)}.pill.gold{border-color:#ead58c;background:linear-gradient(135deg,#fff7d9,#ffedb0)}
+input,select,textarea{border-color:#d5dfd0;background:#fbfcfa;transition:border-color .18s ease,box-shadow .18s ease,background .18s ease}input:hover,select:hover,textarea:hover{border-color:#b9cdb1;background:#fff}input:focus,select:focus,textarea:focus{background:#fff;box-shadow:0 0 0 4px rgba(79,125,67,.12)}
+.success{box-shadow:inset 4px 0 var(--leaf)}
+.step-num{box-shadow:0 5px 13px rgba(38,72,48,.12)}.step.done .step-num{background:linear-gradient(135deg,#2d6344,#1b4730);box-shadow:0 7px 16px rgba(38,72,48,.2)}
+.stat{background:linear-gradient(145deg,#fff,#f1f6ed);box-shadow:0 8px 22px rgba(35,55,38,.05);transition:transform .2s ease,box-shadow .2s ease}.stat:hover{transform:translateY(-3px);box-shadow:0 13px 28px rgba(35,55,38,.1)}
+.package-row{border-color:#e8eee5;transition:background .18s ease,transform .18s ease}.package-row:hover{background:#f7faf5;transform:translateX(4px)}
+.contract{border:1px solid #dce7d6;background:linear-gradient(145deg,#f3f8ef,#eaf3e3)}
+footer{background:rgba(255,255,255,.86);backdrop-filter:blur(12px)}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+@media(max-width:850px){.hero{grid-template-columns:1fr}.hero-art{min-height:240px;grid-row:1}.hero-copy{padding:28px}.cards{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.nav{align-items:flex-start;flex-direction:column}nav{width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}nav::-webkit-scrollbar{display:none}nav button{padding:9px;white-space:nowrap}.lang-toggle{position:sticky;right:0;margin-left:auto!important}.section-head{align-items:flex-start;flex-direction:column}}
+@media(max-width:520px){main{padding:18px 14px 42px}.nav{padding:12px 14px}.cards{grid-template-columns:1fr}.form-grid,.stat-grid{grid-template-columns:1fr}.panel{padding:18px}.hero-art{min-height:200px}.footer-inner{padding:20px 14px}}
+</style>
+</head>
+<body>
+<div class="top-note">DEMONSTRATION PROTOTYPE · SAMPLE DATA ONLY · NOT A LIVE FUND</div>
+<header>
+  <div class="nav">
+    <a class="brand" href="#" onclick="showView('home');return false">
+      <span class="logo">🥑</span><span>Urrao Avocado<small>Resilience Partnership</small></span>
+    </a>
+    <nav aria-label="Main navigation">
+      <button class="active" data-view="home" onclick="showView('home')">Home</button>
+      <button data-view="report" onclick="showView('report')">Report damage</button>
+      <button data-view="verification" onclick="showView('verification')">Verification</button>
+      <button data-view="support" onclick="showView('support')">Recovery fund</button>
+      <button data-view="tracking" onclick="showView('tracking')">Recovery tracking</button>
+      <button class="lang-toggle" id="languageToggle" type="button" onclick="toggleLanguage()" aria-label="Switch to Spanish" title="Switch to Spanish">ES</button>
+    </nav>
+  </div>
+</header>
+<main>
+<section id="home" class="view active">
+  <div class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">Built around the people who grow our food</div>
+      <h1>Stronger farms.<br>More resilient communities.</h1>
+      <p class="lead">A proposed partnership helping small and medium avocado farmers in Urrao recover after extreme weather — while protecting their relationships with buyers.</p>
+      <div class="actions"><button class="btn" onclick="showView('report')">Report farm damage <span>→</span></button><button class="btn secondary" onclick="showView('support')">Explore recovery support</button></div>
+    </div>
+    <div class="hero-art" role="img" aria-label="Concept artwork showing the avocado resilience website prototype"></div>
+  </div>
+  <div class="section-head"><div><div class="eyebrow">How it works</div><h2>Support that works on two fronts</h2></div><p>The proposal combines practical recovery funding with pre-agreed contract flexibility, so a disruption does not have to end a farmer’s route to market.</p></div>
+  <div class="cards">
+    <article class="card"><div class="icon">🌧️</div><h3>1. Report damage</h3><p>Farmers report weather-related damage through their cooperative and share basic details about the impact.</p><a class="text-link" onclick="showView('report')">Open report form →</a></article>
+    <article class="card"><div class="icon">🌱</div><h3>2. Verify locally</h3><p>An agronomist or approved independent party checks the damage before eligibility is assessed.</p><a class="text-link" onclick="showView('verification')">See verification →</a></article>
+    <article class="card"><div class="icon">🤝</div><h3>3. Provide recovery support</h3><p>A proposed package can cover seedlings, essential repairs, technical advice and short-term assistance.</p><a class="text-link" onclick="showView('support')">View sample package →</a></article>
+    <article class="card"><div class="icon">📦</div><h3>4. Protect market access</h3><p>Pre-agreed contract adjustments can provide flexibility with deliveries and protect the buyer relationship.</p><a class="text-link" onclick="showView('tracking')">Track recovery →</a></article>
+  </div>
+  <div class="notice">Prototype note: this is a concept for discussion with farmers, cooperatives, exporters and importers. The programme, eligibility rules, contribution amounts and contract terms have not been established.</div>
+</section>
+
+<section id="report" class="view">
+  <div class="page-intro"><div class="eyebrow">Step 1 · Farmer report</div><h2>Report farm damage</h2><p>Use this sample form to demonstrate how a farmer could report a disruption. The information stays in this browser demo and is not sent to an organisation.</p></div>
+  <div class="layout">
+    <div class="panel">
+      <div class="panel-head"><h3>Farm damage report</h3><span class="pill">Sample form</span></div>
+      <form id="damageForm">
+        <div class="form-grid">
+          <div class="field"><label for="farmer">Farmer name</label><input id="farmer" name="farmer" value="Juan Pérez" required></div>
+          <div class="field"><label for="farm">Farm name</label><input id="farm" name="farm" value="Finca La Esperanza" required></div>
+          <div class="field"><label for="location">Location</label><input id="location" name="location" value="Urrao, Antioquia" required></div>
+          <div class="field"><label for="date">Date of event</label><input id="date" name="date" type="date" value="2026-04-14" required></div>
+          <div class="field"><label for="event">Type of disruption</label><select id="event" name="event" required><option>Extreme rainfall</option><option>Landslide</option><option>Road access disruption</option><option>Other major disruption</option></select></div>
+          <div class="field"><label for="impact">Main impact</label><select id="impact" name="impact" required><option>Crop damage</option><option>Road access blocked</option><option>Irrigation or drainage damage</option><option>Equipment damage</option><option>Multiple impacts</option></select></div>
+          <div class="field full"><label for="details">What happened?</label><textarea id="details" name="details" placeholder="Briefly describe the damage and what support may be needed." required>Heavy rainfall damaged part of the farm access route and affected drainage in one section of the orchard.</textarea><div class="help">In a real programme, photos or supporting documents could be added here.</div></div>
+          <div class="field full"><button class="btn" type="submit">Submit sample report →</button></div>
+        </div>
+      </form>
+      <div class="success" id="formSuccess" role="status"><strong>Sample report recorded in this demo.</strong><br>Your next step is local damage verification. No information has been sent or saved to a server. <div class="actions"><button class="btn" onclick="showView('verification')">Continue to verification →</button></div></div>
+    </div>
+    <aside>
+      <div class="panel"><h3>What happens next?</h3><div class="steps"><div class="step done"><span class="step-num">1</span><div><strong>Report submitted</strong><p>The farmer shares details of the disruption.</p></div></div><div class="step"><span class="step-num">2</span><div><strong>Damage verified</strong><p>A local agronomist or approved independent party checks the impact.</p></div></div><div class="step"><span class="step-num">3</span><div><strong>Eligibility reviewed</strong><p>The proposed fund administrator checks the programme criteria.</p></div></div><div class="step"><span class="step-num">4</span><div><strong>Support agreed</strong><p>The recovery package and contract adjustments are confirmed by the partners.</p></div></div></div></div>
+      <div class="panel"><h3>Designed for farmers</h3><p style="font-size:13px;color:var(--muted)">The proposed process uses the local cooperative as a point of contact and aims to keep reporting clear, accessible and transparent.</p></div>
+    </aside>
+  </div>
+</section>
+
+<section id="verification" class="view">
+  <div class="page-intro"><div class="eyebrow">Step 2 · Local assessment</div><h2>Damage verification</h2><p>Before support is approved, reported damage would be checked against the partnership’s agreed eligibility rules.</p></div>
+  <div class="layout">
+    <div class="panel"><div class="panel-head"><h3>Verification timeline</h3><span class="pill gold">Illustrative example</span></div>
+      <div class="steps">
+        <div class="step done"><span class="step-num">✓</span><div><strong>Report received</strong><p>14 April 2026 · Sample date</p></div></div>
+        <div class="step done"><span class="step-num">✓</span><div><strong>Cooperative contacted</strong><p>The report is referred to the local point of contact.</p></div></div>
+        <div class="step done"><span class="step-num">✓</span><div><strong>Farm visit completed</strong><p>An agronomist records the observed damage and likely recovery needs.</p></div></div>
+        <div class="step done"><span class="step-num">✓</span><div><strong>Damage confirmed</strong><p>Sample outcome: damage is confirmed and the farmer can proceed to eligibility review.</p></div></div>
+      </div>
+      <div class="notice">This timeline is fictional demonstration data. A real programme would need to agree who verifies damage, what evidence is required and how appeals work.</div>
+    </div>
+    <aside><div class="panel"><div class="icon">✓</div><h3>Sample assessment outcome</h3><p style="color:var(--muted);font-size:13px">Reported disruption: extreme rainfall</p><p style="color:var(--muted);font-size:13px">Assessment status: damage confirmed</p><span class="pill">Ready for eligibility review</span><div class="actions"><button class="btn" onclick="showView('support')">View recovery package →</button></div></div></aside>
+  </div>
+</section>
+
+<section id="support" class="view">
+  <div class="page-intro"><div class="eyebrow">Step 3 · Recovery fund</div><h2>Recovery fund support</h2><p>The proposed fund would help cover practical recovery costs. Contributions could come from participating exporters and Dutch importers for each kilogram purchased through the pilot.</p></div>
+  <div class="layout">
+    <div class="panel"><div class="panel-head"><h3>Illustrative support package</h3><span class="pill">Example only</span></div>
+      <div class="package-row"><div><strong>Replacement seedlings</strong><small>Hass avocado seedlings and planting materials</small></div><div class="amount">COP 8,000,000</div></div>
+      <div class="package-row"><div><strong>Irrigation and drainage repair</strong><small>Essential materials and repair work</small></div><div class="amount">COP 5,000,000</div></div>
+      <div class="package-row"><div><strong>Technical assistance</strong><small>Assessment and on-farm advice</small></div><div class="amount">COP 2,000,000</div></div>
+      <div class="package-row"><div><strong>Short-term recovery assistance</strong><small>Support for urgent recovery costs</small></div><div class="amount">COP 3,000,000</div></div>
+      <div class="total"><span>Illustrative total</span><span>COP 18,000,000</span></div>
+      <div class="notice">These amounts are placeholders for demonstrating the interface, not a budget estimate or a promise of payment.</div>
+    </div>
+    <aside><div class="panel"><h3>How the fund could be governed</h3><p style="font-size:13px;color:var(--muted)">A trusted independent administrator could manage the money, with oversight from farmers, the cooperative, exporters, importers and an independent agricultural expert.</p><ul class="check-list"><li><span class="check">✓</span> Clear eligibility rules</li><li><span class="check">✓</span> Published decisions and payments</li><li><span class="check">✓</span> Farmer representation</li><li><span class="check">✓</span> A way to appeal decisions</li></ul><div class="actions"><button class="btn" onclick="showView('tracking')">See recovery tracking →</button></div></div></aside>
+  </div>
+</section>
+
+<section id="tracking" class="view">
+  <div class="page-intro"><div class="eyebrow">Step 4 · Recovery and market access</div><h2>Recovery tracking</h2><p>Support should help the farm recover while agreed contract adjustments give the farmer time to restore production.</p></div>
+  <div class="stat-grid"><div class="stat"><strong>60%</strong><span>Illustrative recovery progress</span></div><div class="stat"><strong>4</strong><span>Support activities in the example</span></div><div class="stat"><strong>Sep 2026</strong><span>Example target completion</span></div></div>
+  <div class="layout">
+    <div class="panel"><div class="panel-head"><h3>Support received</h3><span class="pill">Sample tracker</span></div>
+      <ul class="check-list"><li><span class="check">✓</span><span style="flex:1">Seedlings delivered</span><span class="help">20 Apr 2026</span></li><li><span class="check">✓</span><span style="flex:1">Irrigation materials delivered</span><span class="help">5 May 2026</span></li><li><span style="color:#a88718">●</span><span style="flex:1">Technical assistance ongoing</span><span class="help">In progress</span></li><li><span class="check">✓</span><span style="flex:1">Recovery assistance paid</span><span class="help">22 Apr 2026</span></li></ul>
+      <div class="actions"><button class="btn secondary" onclick="showView('support')">View support details</button></div>
+    </div>
+    <aside><div class="panel"><h3>Contract and deliveries</h3><p style="font-size:13px;color:var(--muted)">A disaster-triggered resilience contract could set out temporary delivery adjustments during verified recovery.</p><div class="contract"><strong>Proposed contract adjustments</strong><ul><li>Flexible delivery dates</li><li>Temporarily reduced delivery volumes</li><li>Protection from disruption-related penalties</li><li>Minimum purchasing commitment during recovery</li></ul></div><div class="notice">These are proposed terms for discussion, not an existing or legally binding contract.</div></div></aside>
+  </div>
+</section>
+</main>
+<footer><div class="footer-inner"><span><strong>Urrao Avocado Resilience Partnership</strong> · AvoLink concept prototype</span><span>Designed for discussion · All farmer and financial details are illustrative</span></div></footer>
+<script>
+const translations = {
+  "A demonstration prototype for the Urrao Avocado Resilience Partnership.": "Un prototipo de demostración para la Alianza para la Resiliencia del Aguacate de Urrao.",
+  "Urrao Avocado Resilience Partnership": "Alianza para la Resiliencia del Aguacate de Urrao",
+  "DEMONSTRATION PROTOTYPE · SAMPLE DATA ONLY · NOT A LIVE FUND": "PROTOTIPO DE DEMOSTRACIÓN · SOLO DATOS DE EJEMPLO · NO ES UN FONDO ACTIVO",
+  "Resilience Partnership": "Alianza para la Resiliencia",
+  "Main navigation": "Navegación principal",
+  "Home": "Inicio",
+  "Report damage": "Reportar daños",
+  "Verification": "Verificación",
+  "Recovery fund": "Fondo de recuperación",
+  "Recovery tracking": "Seguimiento de la recuperación",
+  "Built around the people who grow our food": "Creado pensando en quienes cultivan nuestros alimentos",
+  "Stronger farms.": "Fincas más fuertes.",
+  "More resilient communities.": "Comunidades más resilientes.",
+  "A proposed partnership helping small and medium avocado farmers in Urrao recover after extreme weather — while protecting their relationships with buyers.": "Una alianza propuesta para ayudar a los pequeños y medianos productores de aguacate de Urrao a recuperarse después de fenómenos meteorológicos extremos, protegiendo al mismo tiempo sus relaciones con los compradores.",
+  "Report farm damage": "Reportar daños en la finca",
+  "Explore recovery support": "Explorar el apoyo para la recuperación",
+  "Concept artwork showing the avocado resilience website prototype": "Ilustración conceptual del prototipo del sitio web de resiliencia del aguacate",
+  "How it works": "Cómo funciona",
+  "Support that works on two fronts": "Apoyo que actúa en dos frentes",
+  "The proposal combines practical recovery funding with pre-agreed contract flexibility, so a disruption does not have to end a farmer’s route to market.": "La propuesta combina financiación práctica para la recuperación con flexibilidad contractual acordada de antemano, para que una interrupción no tenga que cerrar el acceso del productor al mercado.",
+  "1. Report damage": "1. Reportar daños",
+  "Farmers report weather-related damage through their cooperative and share basic details about the impact.": "Los productores reportan los daños relacionados con el clima a través de su cooperativa y comparten información básica sobre el impacto.",
+  "Open report form →": "Abrir formulario de reporte →",
+  "2. Verify locally": "2. Verificar localmente",
+  "An agronomist or approved independent party checks the damage before eligibility is assessed.": "Un agrónomo o una entidad independiente autorizada verifica los daños antes de evaluar la elegibilidad.",
+  "See verification →": "Ver la verificación →",
+  "3. Provide recovery support": "3. Brindar apoyo para la recuperación",
+  "A proposed package can cover seedlings, essential repairs, technical advice and short-term assistance.": "Un paquete propuesto puede cubrir plántulas, reparaciones esenciales, asesoría técnica y asistencia a corto plazo.",
+  "View sample package →": "Ver paquete de ejemplo →",
+  "4. Protect market access": "4. Proteger el acceso al mercado",
+  "Pre-agreed contract adjustments can provide flexibility with deliveries and protect the buyer relationship.": "Los ajustes contractuales acordados de antemano pueden dar flexibilidad a las entregas y proteger la relación con el comprador.",
+  "Track recovery →": "Seguir la recuperación →",
+  "Prototype note: this is a concept for discussion with farmers, cooperatives, exporters and importers. The programme, eligibility rules, contribution amounts and contract terms have not been established.": "Nota sobre el prototipo: este es un concepto para conversar con productores, cooperativas, exportadores e importadores. El programa, las reglas de elegibilidad, los montos de contribución y las condiciones contractuales aún no se han establecido.",
+  "Step 1 · Farmer report": "Paso 1 · Reporte del productor",
+  "Use this sample form to demonstrate how a farmer could report a disruption. The information stays in this browser demo and is not sent to an organisation.": "Este formulario de ejemplo muestra cómo un productor podría reportar una interrupción. La información permanece en esta demostración del navegador y no se envía a ninguna organización.",
+  "Farm damage report": "Reporte de daños en la finca",
+  "Sample form": "Formulario de ejemplo",
+  "Farmer name": "Nombre del productor",
+  "Farm name": "Nombre de la finca",
+  "Location": "Ubicación",
+  "Date of event": "Fecha del evento",
+  "Type of disruption": "Tipo de interrupción",
+  "Extreme rainfall": "Lluvias extremas",
+  "Landslide": "Deslizamiento de tierra",
+  "Road access disruption": "Interrupción del acceso vial",
+  "Other major disruption": "Otra interrupción importante",
+  "Main impact": "Impacto principal",
+  "Crop damage": "Daños al cultivo",
+  "Road access blocked": "Acceso vial bloqueado",
+  "Irrigation or drainage damage": "Daños en el riego o el drenaje",
+  "Equipment damage": "Daños en equipos",
+  "Multiple impacts": "Múltiples impactos",
+  "What happened?": "¿Qué ocurrió?",
+  "Briefly describe the damage and what support may be needed.": "Describa brevemente los daños y el apoyo que podría necesitar.",
+  "Heavy rainfall damaged part of the farm access route and affected drainage in one section of the orchard.": "Las fuertes lluvias dañaron parte de la vía de acceso a la finca y afectaron el drenaje en una sección del cultivo.",
+  "In a real programme, photos or supporting documents could be added here.": "En un programa real, aquí se podrían agregar fotos o documentos de respaldo.",
+  "Submit sample report →": "Enviar reporte de ejemplo →",
+  "Sample report recorded in this demo.": "Reporte de ejemplo registrado en esta demostración.",
+  "Your next step is local damage verification. No information has been sent or saved to a server.": "El siguiente paso es la verificación local de los daños. No se ha enviado ni guardado información en un servidor.",
+  "Continue to verification →": "Continuar a la verificación →",
+  "What happens next?": "¿Qué sucede después?",
+  "Report submitted": "Reporte enviado",
+  "The farmer shares details of the disruption.": "El productor comparte los detalles de la interrupción.",
+  "Damage verified": "Daños verificados",
+  "A local agronomist or approved independent party checks the impact.": "Un agrónomo local o una entidad independiente autorizada verifica el impacto.",
+  "Eligibility reviewed": "Elegibilidad revisada",
+  "The proposed fund administrator checks the programme criteria.": "El administrador propuesto del fondo comprueba los criterios del programa.",
+  "Support agreed": "Apoyo acordado",
+  "The recovery package and contract adjustments are confirmed by the partners.": "Los socios confirman el paquete de recuperación y los ajustes contractuales.",
+  "Designed for farmers": "Diseñado para los productores",
+  "The proposed process uses the local cooperative as a point of contact and aims to keep reporting clear, accessible and transparent.": "El proceso propuesto utiliza la cooperativa local como punto de contacto y busca que los reportes sean claros, accesibles y transparentes.",
+  "Step 2 · Local assessment": "Paso 2 · Evaluación local",
+  "Damage verification": "Verificación de daños",
+  "Before support is approved, reported damage would be checked against the partnership’s agreed eligibility rules.": "Antes de aprobar el apoyo, los daños reportados se comprobarían de acuerdo con las reglas de elegibilidad acordadas por la alianza.",
+  "Verification timeline": "Cronología de verificación",
+  "Illustrative example": "Ejemplo ilustrativo",
+  "Report received": "Reporte recibido",
+  "14 April 2026 · Sample date": "14 de abril de 2026 · Fecha de ejemplo",
+  "Cooperative contacted": "Cooperativa contactada",
+  "The report is referred to the local point of contact.": "El reporte se remite al punto de contacto local.",
+  "Farm visit completed": "Visita a la finca completada",
+  "An agronomist records the observed damage and likely recovery needs.": "Un agrónomo registra los daños observados y las posibles necesidades de recuperación.",
+  "Damage confirmed": "Daños confirmados",
+  "Sample outcome: damage is confirmed and the farmer can proceed to eligibility review.": "Resultado de ejemplo: se confirman los daños y el productor puede continuar con la revisión de elegibilidad.",
+  "This timeline is fictional demonstration data. A real programme would need to agree who verifies damage, what evidence is required and how appeals work.": "Esta cronología contiene datos ficticios de demostración. Un programa real tendría que acordar quién verifica los daños, qué pruebas se requieren y cómo funcionan las apelaciones.",
+  "Sample assessment outcome": "Resultado de evaluación de ejemplo",
+  "Reported disruption: extreme rainfall": "Interrupción reportada: lluvias extremas",
+  "Assessment status: damage confirmed": "Estado de la evaluación: daños confirmados",
+  "Ready for eligibility review": "Listo para la revisión de elegibilidad",
+  "View recovery package →": "Ver paquete de recuperación →",
+  "Step 3 · Recovery fund": "Paso 3 · Fondo de recuperación",
+  "Recovery fund support": "Apoyo del fondo de recuperación",
+  "The proposed fund would help cover practical recovery costs. Contributions could come from participating exporters and Dutch importers for each kilogram purchased through the pilot.": "El fondo propuesto ayudaría a cubrir los costos prácticos de recuperación. Las contribuciones podrían provenir de exportadores participantes e importadores neerlandeses por cada kilogramo comprado a través del piloto.",
+  "Illustrative support package": "Paquete de apoyo ilustrativo",
+  "Example only": "Solo un ejemplo",
+  "Replacement seedlings": "Plántulas de reemplazo",
+  "Hass avocado seedlings and planting materials": "Plántulas de aguacate Hass y materiales de siembra",
+  "Irrigation and drainage repair": "Reparación de riego y drenaje",
+  "Essential materials and repair work": "Materiales esenciales y trabajos de reparación",
+  "Technical assistance": "Asistencia técnica",
+  "Assessment and on-farm advice": "Evaluación y asesoría en la finca",
+  "Short-term recovery assistance": "Asistencia para la recuperación a corto plazo",
+  "Support for urgent recovery costs": "Apoyo para costos urgentes de recuperación",
+  "Illustrative total": "Total ilustrativo",
+  "These amounts are placeholders for demonstrating the interface, not a budget estimate or a promise of payment.": "Estos montos son valores de muestra para demostrar la interfaz; no son una estimación presupuestaria ni una promesa de pago.",
+  "How the fund could be governed": "Cómo podría gobernarse el fondo",
+  "A trusted independent administrator could manage the money, with oversight from farmers, the cooperative, exporters, importers and an independent agricultural expert.": "Un administrador independiente de confianza podría gestionar el dinero, bajo la supervisión de productores, la cooperativa, exportadores, importadores y un experto agrícola independiente.",
+  "Clear eligibility rules": "Reglas de elegibilidad claras",
+  "Published decisions and payments": "Decisiones y pagos publicados",
+  "Farmer representation": "Representación de los productores",
+  "A way to appeal decisions": "Un mecanismo para apelar decisiones",
+  "See recovery tracking →": "Ver seguimiento de la recuperación →",
+  "Step 4 · Recovery and market access": "Paso 4 · Recuperación y acceso al mercado",
+  "Support should help the farm recover while agreed contract adjustments give the farmer time to restore production.": "El apoyo debe ayudar a la finca a recuperarse, mientras los ajustes contractuales acordados dan al productor tiempo para restablecer la producción.",
+  "Illustrative recovery progress": "Progreso ilustrativo de la recuperación",
+  "Support activities in the example": "Actividades de apoyo del ejemplo",
+  "Sep 2026": "Sept 2026",
+  "Example target completion": "Fecha objetivo de finalización del ejemplo",
+  "Support received": "Apoyo recibido",
+  "Sample tracker": "Seguimiento de ejemplo",
+  "Seedlings delivered": "Plántulas entregadas",
+  "20 Apr 2026": "20 abr 2026",
+  "Irrigation materials delivered": "Materiales de riego entregados",
+  "5 May 2026": "5 may 2026",
+  "Technical assistance ongoing": "Asistencia técnica en curso",
+  "In progress": "En progreso",
+  "Recovery assistance paid": "Asistencia para la recuperación pagada",
+  "22 Apr 2026": "22 abr 2026",
+  "View support details": "Ver detalles del apoyo",
+  "Contract and deliveries": "Contrato y entregas",
+  "A disaster-triggered resilience contract could set out temporary delivery adjustments during verified recovery.": "Un contrato de resiliencia activado por desastres podría establecer ajustes temporales en las entregas durante una recuperación verificada.",
+  "Proposed contract adjustments": "Ajustes contractuales propuestos",
+  "Flexible delivery dates": "Fechas de entrega flexibles",
+  "Temporarily reduced delivery volumes": "Reducción temporal de los volúmenes de entrega",
+  "Protection from disruption-related penalties": "Protección frente a sanciones relacionadas con la interrupción",
+  "Minimum purchasing commitment during recovery": "Compromiso mínimo de compra durante la recuperación",
+  "These are proposed terms for discussion, not an existing or legally binding contract.": "Estas son condiciones propuestas para su discusión, no un contrato existente ni jurídicamente vinculante.",
+  "· AvoLink concept prototype": "· Prototipo conceptual de AvoLink",
+  "Designed for discussion · All farmer and financial details are illustrative": "Diseñado para la conversación · Todos los datos de productores y financieros son ilustrativos"
+};
+const originalText = new WeakMap();
+const originalAttributes = new WeakMap();
+let currentLanguage = "en";
+
+function translatedText(key, language){
+  return language === "es" && translations[key] ? translations[key] : key;
+}
+
+function setLanguage(language){
+  currentLanguage = language === "es" ? "es" : "en";
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  let node;
+  while((node = walker.nextNode())){
+    const trimmed = node.nodeValue.trim();
+    if(!trimmed) continue;
+    if(!originalText.has(node)) originalText.set(node, trimmed);
+    const key = originalText.get(node);
+    const leading = node.nodeValue.match(/^\s*/)[0];
+    const trailing = node.nodeValue.match(/\s*$/)[0];
+    node.nodeValue = leading + translatedText(key, currentLanguage) + trailing;
+  }
+  document.querySelectorAll("[placeholder],[aria-label]").forEach(element=>{
+    if(!originalAttributes.has(element)){
+      originalAttributes.set(element, {
+        placeholder: element.getAttribute("placeholder"),
+        ariaLabel: element.getAttribute("aria-label")
+      });
+    }
+    const originals = originalAttributes.get(element);
+    if(originals.placeholder !== null) element.setAttribute("placeholder", translatedText(originals.placeholder, currentLanguage));
+    if(originals.ariaLabel !== null && element.id !== "languageToggle") element.setAttribute("aria-label", translatedText(originals.ariaLabel, currentLanguage));
+  });
+  document.querySelectorAll("textarea").forEach(element=>{
+    if(!element.dataset.originalValue) element.dataset.originalValue = element.value;
+    element.value = translatedText(element.dataset.originalValue, currentLanguage);
+  });
+  document.documentElement.lang = currentLanguage;
+  document.title = currentLanguage === "es" ? "Alianza para la Resiliencia del Aguacate de Urrao" : "Urrao Avocado Resilience Partnership";
+  const description = document.querySelector('meta[name="description"]');
+  if(description) description.content = translatedText("A demonstration prototype for the Urrao Avocado Resilience Partnership.", currentLanguage);
+  const toggle = document.getElementById("languageToggle");
+  toggle.textContent = currentLanguage === "es" ? "EN" : "ES";
+  toggle.setAttribute("aria-label", currentLanguage === "es" ? "Cambiar a inglés" : "Switch to Spanish");
+  toggle.title = currentLanguage === "es" ? "Cambiar a inglés" : "Switch to Spanish";
+  toggle.setAttribute("aria-pressed", currentLanguage === "es" ? "true" : "false");
+  localStorage.setItem("urrao-language", currentLanguage);
+}
+
+function toggleLanguage(){
+  setLanguage(currentLanguage === "en" ? "es" : "en");
+}
+
+function showView(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.getElementById('damageForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  document.getElementById('formSuccess').classList.add('show');
+  document.getElementById('formSuccess').scrollIntoView({behavior:'smooth',block:'nearest'});
+});
+setLanguage(localStorage.getItem("urrao-language") || "en");
+</script>
+</body>
+</html>
